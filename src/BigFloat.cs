@@ -165,7 +165,11 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     }
     public BigFloat Pow(int exponent)
     {
-        if (exponent < 0)
+        if (numerator.IsZero)
+        {
+            // Nothing to do
+        }
+        else if (exponent < 0)
         {
             BigInteger savedNumerator = numerator;
             numerator = BigInteger.Pow(denominator, -exponent);
