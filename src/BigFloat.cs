@@ -160,8 +160,9 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     {
         if (exponent < 0)
         {
+            BigInteger savedNumerator = numerator;
             numerator = BigInteger.Pow(denominator, -exponent);
-            denominator = BigInteger.Pow(numerator, -exponent);
+            denominator = BigInteger.Pow(savedNumerator, -exponent);
         }
         else
         {
