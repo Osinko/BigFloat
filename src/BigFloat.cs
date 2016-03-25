@@ -20,7 +20,14 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     {
         get
         {
-            return numerator.Sign;
+            switch(numerator.Sign + denominator.Sign) {
+                case 2: case -2:
+                    return 1;
+                case 0:
+                    return -1;
+                default:
+                    return 0;
+            }
         }
     }
 
