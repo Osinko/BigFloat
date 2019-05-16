@@ -299,7 +299,7 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
             return result.ToString();
 
 
-        BigInteger decimals = (numerator * BigInteger.Pow(10, precision)) / denominator;
+        BigInteger decimals = BigInteger.Abs((numerator * BigInteger.Pow(10, precision)) / denominator);
 
         if (decimals == 0 && trailingZeros)
             return result + ".0";
@@ -315,9 +315,9 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
         }
 
         if (trailingZeros)
-             return result + "." + new string(sb.ToString().Reverse().ToArray());
+             return (Sign < 0 ? "-" : "") + result + "." + new string(sb.ToString().Reverse().ToArray());
         else
-            return result + "." + new string(sb.ToString().Reverse().ToArray()).TrimEnd(new char[] { '0' });
+            return (Sign < 0 ? "-" : "") + result + "." + new string(sb.ToString().Reverse().ToArray()).TrimEnd(new char[] { '0' });
 
            
     }
