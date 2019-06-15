@@ -286,7 +286,7 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
         //default precision = 100
         return ToString(100);
     }
-    public string ToString(int precision, bool trailingZeros = false) 
+    public string ToString(int precision, bool trailingZeros = false)
     {
         Factor();
 
@@ -295,31 +295,23 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
 
         if (remainder == 0 && trailingZeros)
             return result + ".0";
-        else if(remainder == 0)
+        else if (remainder == 0)
             return result.ToString();
 
 
         BigInteger decimals = (numerator * BigInteger.Pow(10, precision)) / denominator;
+        string decString = decimals.ToString();
+        decString = decString.Substring(result.ToString().Length, decString.Length - result.ToString().Length);
 
         if (decimals == 0 && trailingZeros)
             return result + ".0";
-        else if(decimals == 0)
+        else if (decimals == 0)
             return result.ToString();
 
-        StringBuilder sb = new StringBuilder();
-
-        while (precision-- > 0 && decimals > 0)
-        {
-            sb.Append(decimals%10);
-            decimals /= 10;
-        }
-
         if (trailingZeros)
-             return result + "." + new string(sb.ToString().Reverse().ToArray());
+            return result + "." + new string(decString.ToArray());
         else
-            return result + "." + new string(sb.ToString().Reverse().ToArray()).TrimEnd(new char[] { '0' });
-
-           
+            return result + "." + new string(decString.ToArray()).TrimEnd(new char[] { '0' });
     }
     public string ToMixString()
     {
